@@ -57,7 +57,7 @@ export default {
     search: function () {
 
       axios
-      .get("https://api.themoviedb.org/3/search/movie?api_key=22bb06029ddd3823a614fa4551416767", {params: {query: this.store.query}})
+      .get("https://api.themoviedb.org/3/search/movie", {params: {api_key: this.store.key, query: this.store.query}})
       .then((resp) => {
         this.store.moviesArray = resp.data.results
         console.log(this.store.query);
@@ -65,7 +65,7 @@ export default {
       });
 
       axios
-      .get("https://api.themoviedb.org/3/search/tv?api_key=22bb06029ddd3823a614fa4551416767", {params: {query: this.store.query}})
+      .get("https://api.themoviedb.org/3/search/tv", {params: {api_key: this.store.key, query: this.store.query}})
       .then((resp) => {
         this.store.TvArray = resp.data.results
         console.log(this.store.TvArray);

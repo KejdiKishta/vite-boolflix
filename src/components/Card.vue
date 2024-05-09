@@ -48,27 +48,29 @@ export default {
 </script>
 
 <template>
-    <section>
+    <section class="bg-dark">
         <img class="ms_thumb" :src="getThumb(cardInfo.backdrop_path)" :alt="cardInfo.title">
-        <div class="text-center ms_info">
-            <h3 v-if="cardInfo.title">{{ cardInfo.title }}</h3>
-            <h3 v-else>{{ cardInfo.name }}</h3>
-
-            <h5 v-if="cardInfo.original_title">{{ cardInfo.original_title }}</h5>
-            <h5 v-else>{{ cardInfo.original_name }}</h5>
-            
+        <div class="text-center m-2 ms_info text-light">
             <div>
-                lang: {{ cardInfo.original_language }}
-                <img :src="getFlag(cardInfo.original_language)" alt="">
-            </div>
-            
-            <div>
-                Rating: 
-                <i 
-                v-for="index in 5" 
-                class="fa-star text-warning" 
-                :class="getRating(cardInfo.vote_average) < index? 'fa-regular' : 'fa-solid'">
-                </i> 
+                <h5 v-if="cardInfo.title">{{ cardInfo.title }}</h5>
+                <h5 v-else>{{ cardInfo.name }}</h5>
+    
+                <h6 v-if="cardInfo.original_title">{{ cardInfo.original_title }}</h6>
+                <h6 v-else>{{ cardInfo.original_name }}</h6>
+                
+                <div>
+                    lang: {{ cardInfo.original_language }}
+                    <img :src="getFlag(cardInfo.original_language)" alt="">
+                </div>
+                
+                <div>
+                    Rating: 
+                    <i 
+                    v-for="index in 5" 
+                    class="fa-star text-warning" 
+                    :class="getRating(cardInfo.vote_average) < index ? 'fa-regular' : 'fa-solid'">
+                    </i> 
+                </div>
             </div>
             <!-- <div>Rating: {{ getRating(cardInfo.vote_average) }} </div> -->
         </div>
@@ -79,8 +81,10 @@ export default {
 .ms_thumb {
     height: 100%;
 }
+
 section{
     aspect-ratio: 1;
+    border: 2px solid white;
 
     &:hover {
         .ms_info {
