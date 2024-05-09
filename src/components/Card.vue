@@ -1,7 +1,16 @@
 <script>
+import axios from 'axios';
+import { store } from '../store';
+
 export default {
     props: {
         cardInfo: Object,
+    },
+    data() {
+        return {
+            store,
+            firstFiveCastMembers: []
+        }
     },
     methods: {
         getFlag: function (lang) {
@@ -42,6 +51,16 @@ export default {
         getRating: function(rating) {
             const result = Math.round(rating) / 2
             return Math.ceil(result)
+        },
+        getFiveCastMembers: function (movieId) {
+            axios
+            .get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {params: {api_key: this.store.key}})
+            .then((resp) => {
+                for (let i = 0; i < 5; i++) {
+                    this.firstFiveCastMembers.push(resp.data.cast[i].name);
+                }
+                console.log(this.firstFiveCastMembers);
+            })
         }
     }
 }
@@ -70,6 +89,13 @@ export default {
                     class="fa-star text-warning" 
                     :class="getRating(cardInfo.vote_average) < index ? 'fa-regular' : 'fa-solid'">
                     </i> 
+                </div>
+
+                <div>
+                    Cast:
+                    <ul>
+                        <li v-for="member in firstFiveCastMembers" :key="member">{{ member }}</li>
+                    </ul>
                 </div>
             </div>
             <!-- <div>Rating: {{ getRating(cardInfo.vote_average) }} </div> -->
