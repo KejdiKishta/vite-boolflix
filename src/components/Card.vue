@@ -33,7 +33,11 @@ export default {
             return new URL (`../assets/icons/${flag}`, import.meta.url).href;
         },
         getThumb: function (img) {
-            return `https://image.tmdb.org/t/p/w342/${img}`
+            if (img !== null) {
+                return `https://image.tmdb.org/t/p/w342/${img}`
+            } else {
+                return "https://egress.storeden.net/gallery/59f987adffe48e6f5d6d5016"
+            }
         },
         getRating: function(rating) {
             const result = Math.round(rating) / 2
@@ -47,8 +51,12 @@ export default {
     <section>
         <img class="ms_thumb" :src="getThumb(cardInfo.backdrop_path)" :alt="cardInfo.title">
         <div class="text-center ms_info">
-            <h3>{{ cardInfo.title }}</h3>
-            <h5>{{ cardInfo.original_title }}</h5>
+            <h3 v-if="cardInfo.title">{{ cardInfo.title }}</h3>
+            <h3 v-else>{{ cardInfo.name }}</h3>
+
+            <h5 v-if="cardInfo.original_title">{{ cardInfo.original_title }}</h5>
+            <h5 v-else>{{ cardInfo.original_name }}</h5>
+            
             <div>
                 lang: {{ cardInfo.original_language }}
                 <img :src="getFlag(cardInfo.original_language)" alt="">
