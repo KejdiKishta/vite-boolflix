@@ -31,26 +31,63 @@ export default {
             }
 
             return new URL (`../assets/icons/${flag}`, import.meta.url).href;
+        },
+        getThumb: function (img) {
+            return `https://image.tmdb.org/t/p/w342/${img}`
+        },
+        getRating: function(rating) {
+            const result = Math.round(rating) / 2
+            return Math.ceil(result)
         }
     }
 }
 </script>
 
 <template>
-    <div class="text-center">
-        <h3>{{ cardInfo.title }}</h3>
-        <h5>{{ cardInfo.original_title }}</h5>
-        <div>
-            lang: {{ cardInfo.original_language }}
-            <img :src="getFlag(cardInfo.original_language)" alt="">
+    <section>
+        <img class="ms_thumb" :src="getThumb(cardInfo.backdrop_path)" :alt="cardInfo.title">
+        <div class="text-center ms_info">
+            <h3>{{ cardInfo.title }}</h3>
+            <h5>{{ cardInfo.original_title }}</h5>
+            <div>
+                lang: {{ cardInfo.original_language }}
+                <img :src="getFlag(cardInfo.original_language)" alt="">
+            </div>
+            
+            <div>
+                Rating: 
+                <i 
+                v-for="index in 5" 
+                class="fa-star text-warning" 
+                :class="getRating(cardInfo.vote_average) < index? 'fa-regular' : 'fa-solid'">
+                </i> 
+            </div>
+            <!-- <div>Rating: {{ getRating(cardInfo.vote_average) }} </div> -->
         </div>
-        
-        <div>Rating: {{ cardInfo.vote_average }} </div>
-    </div>
+    </section>
 </template>
 
 <style scoped lang="scss">
-img {
-    width: 20px;
+.ms_thumb {
+    height: 100%;
+}
+section{
+    aspect-ratio: 1;
+
+    &:hover {
+        .ms_info {
+            display: block;
+        };
+        .ms_thumb {
+            display: none;
+        }
+    }
+
+    .ms_info {
+        display: none;
+        img {
+            width: 20px;
+        }
+    }
 }
 </style>
