@@ -9,8 +9,11 @@ export default {
     data() {
         return {
             store,
-            firstFiveCastMembers: []
+            firstFiveCastMembers: [],
         }
+    },
+    created() {
+        this.getFiveCastMembers(this.cardInfo.id)
     },
     methods: {
         getFlag: function (lang) {
@@ -59,7 +62,9 @@ export default {
                 for (let i = 0; i < 5; i++) {
                     this.firstFiveCastMembers.push(resp.data.cast[i].name);
                 }
-                console.log(this.firstFiveCastMembers);
+            })
+            .catch((error) => {
+                console.log('Si è verificato un errore durante la richiesta:', error);
             })
         }
     }
@@ -68,7 +73,7 @@ export default {
 
 <template>
     <section class="bg-dark">
-        <img class="ms_thumb" :src="getThumb(cardInfo.backdrop_path)" :alt="cardInfo.title">
+        <img class="ms_thumb" :src="getThumb(cardInfo.poster_path)" :alt="cardInfo.title">
         <div class="text-center m-2 ms_info text-light">
             <div>
                 <h5 v-if="cardInfo.title">{{ cardInfo.title }}</h5>
@@ -94,7 +99,8 @@ export default {
                 <div>
                     Cast:
                     <ul>
-                        <li v-for="member in firstFiveCastMembers" :key="member">{{ member }}</li>
+                        <li v-for="member in firstFiveCastMembers" class="text-start">{{ member }}</li>
+                        <!-- getFiveCastMembers(cardInfo.id) -->
                     </ul>
                 </div>
             </div>
@@ -104,13 +110,14 @@ export default {
 </template>
 
 <style scoped lang="scss">
-.ms_thumb {
-    height: 100%;
-}
-
 section{
-    aspect-ratio: 1;
-    border: 2px solid white;
+    border: 2px solid rgb(255, 0, 0);
+    aspect-ratio: 0.7;
+
+    .ms_thumb {
+        height: 100%;
+        width: 100%;
+    }
 
     &:hover {
         .ms_info {

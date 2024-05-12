@@ -75,8 +75,8 @@ export default {
     outline: none;
     border-radius: 50%;
     transition: 0.5s ease-in-out;
-    background-color: #1557c0;
-    box-shadow: 0px 0px 3px #1557c0;
+    background-color: red;
+    box-shadow: 0px 0px 3px red;
     padding-right: 40px;
     color: #fff;
 }
@@ -114,7 +114,7 @@ export default {
     width: 250px;
     border-radius: 0px;
     background-color: transparent;
-    border-bottom: 3px solid #1557c0;
+    border-bottom: 3px solid red;
     transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
 }
 </style>
